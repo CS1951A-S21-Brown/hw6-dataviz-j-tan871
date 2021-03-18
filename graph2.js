@@ -1,12 +1,12 @@
-// // Add your JavaScript code here
-// const MAX_WIDTH = Math.max(1080, window.innerWidth);
-// const MAX_HEIGHT = 720;
-// const margin = { top: 40, right: 100, bottom: 40, left: 175 };
+let svg2 = d3.select('#graph2')
+  .append('svg')
+  .attr("width", graph_2_width)
+  .attr("height", graph_2_height)
+  .append("g")
+  .attr("transform", `translate(${graph_2_width / 2}, ${graph_2_height / 2})`);
 
-// // Assumes the same graph width, height dimensions as the example dashboard. Feel free to change these if you'd like
-// let graph_1_width = (MAX_WIDTH / 2) - 10, graph_1_height = 250;
-// let graph_2_width = (MAX_WIDTH / 2) - 10, graph_2_height = 275;
-// let graph_3_width = MAX_WIDTH / 2, graph_3_height = 575;
+var innerRadius = 75;
+var outerRadius = Math.min(graph_2_width, graph_2_height) / 2;
 
 function cleanData(data) {
   runtimeData = {}
@@ -26,14 +26,48 @@ function cleanData(data) {
   for (var key in runtimeData) {
     runtimeData[key] = parseFloat(runtimeData[key]['total']) / parseFloat(runtimeData[key]['num_movies'])
   }
-  console.log(runtimeData);
-  return runtimeData;
+
+  result = []
+  for (const key in runtimeData) {
+    result.push({
+      release_year: key, 
+      duration: runtimeData[key]
+    })
+  }
+
+  return result;
 }
 
 function setData() {
   d3.csv('./data/netflix.csv').then(function (data) {
     data = cleanData(data)
     console.log(data);
+
+    var x = d3.scaleBand()
+      .domain(data.map(d => d.release_year))
+      .align(0)
+      .range([0, 2 * Math.PI]);
+
+    var maxCount = d3.max(data, d => d.duration);
+
+    var y = d3.scaleLinear()
+      .domain([0, maxCount])
+      .range([innerRadius, outerRadius]);
+
+    let bars = svg2.append('g') 
+      .selectAll('path')
+      .data(data)
+
+    bars.enter()
+      .append('path')
+        .attr('fill', '#69b3a2')
+        .attr('d', d3.arc()
+          .innerRadius(innerRadius)
+          .outerRadius(d => y(d.duration))
+          .startAngle(d => x(d.release_year))
+          .endAngle(d => x(d.release_year) + x.bandwidth())
+          .padAngle(0.01)
+          .padRadius(innerRadius))
   })
 }
 
