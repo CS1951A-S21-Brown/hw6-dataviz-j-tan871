@@ -94,7 +94,7 @@ function cleanData(attr, data) {
     });
 
     listActors.map(d => {
-      findCombinations(d, nodes, links);
+      links = findCombinations(d, nodes, links);
     });
 
     console.log(links);
@@ -105,6 +105,14 @@ function cleanData(attr, data) {
 
 function getRandomId(max) {
   return Math.floor(Math.random() * Math.floor(max));
+}
+
+function convertToId(nodes, combinations) {
+  for (let i = 0; i < combinations.length; i++) {
+    combinations.source = nodes[combinations.source];
+    combinations.output = nodes[combinations.output];
+  }
+  return combinations;
 }
 
 // update links and nodes
@@ -139,6 +147,7 @@ function findCombinations(arr, nodes, combinations) {
       nodes[arr[i].trim()] = getRandomId(100000);
     } 
   }
+  return convertToId(nodes, combinations);
 }
 
 
@@ -175,7 +184,5 @@ function findCombinations(arr, nodes, combinations) {
 
 //   return combinations;
 // }
-
-
 
 setData('title');
