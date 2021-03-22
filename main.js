@@ -1,21 +1,34 @@
 // Add your JavaScript code here
 const MAX_WIDTH = Math.max(1080, window.innerWidth);
-const MAX_HEIGHT = 720;
+const MAX_HEIGHT = 2000;
 const margin = { top: 40, right: 100, bottom: 40, left: 175 };
 
 // Assumes the same graph width, height dimensions as the example dashboard. Feel free to change these if you'd like
 let graph_1_width = (MAX_WIDTH / 2) - 10, graph_1_height = 250;
-let graph_2_width = (MAX_WIDTH / 2) - 10, graph_2_height = 275;
-let graph_3_width = MAX_WIDTH / 2, graph_3_height = 575;
+let graph_2_width = (MAX_WIDTH / 2) - 10, graph_2_height = 600;
+let graph_3_width = MAX_WIDTH / 2, graph_3_height = 850;
 
 // // attr = 'title' : number of titles per genre on Netflix 
 // // attr = 'runtime' : average runtime of movies by release year
 // // attr = 'cast' : a flow chart where each actor is a node, and a link refers to a movie they both acted in
-// function setData(attr) {
-//   d3.csv('./data/netflix.csv').then(function (data) {
-//     data = cleanData('title', data)
-//     console.log(data);
-//   })
+
+// function getRandomId(max) {
+//   return Math.floor(Math.random() * Math.floor(max));
+// }
+
+// function findCombinations(arr, nodes, combinations) {
+//   for (let i = 0; i < arr.length; i++) {
+//     for (let j = i + 1; j < arr.length; j++) {
+//       combinations.push({
+//         source: arr[i].trim(),
+//         output: arr[j].trim()
+//       });
+//     }
+//     if (!nodes[arr[i].trim()]) {
+//       nodes[arr[i].trim()] = getRandomId(100000);
+//     } 
+//   }
+//   return combinations;
 // }
 
 // function cleanData(attr, data) {
@@ -65,9 +78,12 @@ let graph_3_width = MAX_WIDTH / 2, graph_3_height = 575;
 //     });
 
 //     links.map(d => {
-//       d.source = nodes[d.source];
-//       d.output = nodes[d.output];
+//       sourceId = nodes[d.source];
+//       outputId = nodes[d.output];
+//       d.source = sourceId;
+//       d.output = outputId;
 //     });
+//     console.log('hi')
 
 //     console.log(links);
 //     console.log(nodes);
@@ -75,23 +91,11 @@ let graph_3_width = MAX_WIDTH / 2, graph_3_height = 575;
 //   }
 // }
 
-// function getRandomId(max) {
-//   return Math.floor(Math.random() * Math.floor(max));
-// }
-
-// function findCombinations(arr, nodes, combinations) {
-//   for (let i = 0; i < arr.length; i++) {
-//     for (let j = i + 1; j < arr.length; j++) {
-//       combinations.push({
-//         source: arr[i].trim(),
-//         output: arr[j].trim()
-//       });
-//     }
-//     if (!nodes[arr[i].trim()]) {
-//       nodes[arr[i].trim()] = getRandomId(100000);
-//     } 
-//   }
-//   return combinations;
+// function setData(attr) {
+//   d3.csv('./data/netflix.csv').then(function (data) {
+//     data = cleanData('cast', data)
+//     console.log(data);
+//   })
 // }
 
 // setData('title');

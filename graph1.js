@@ -7,12 +7,9 @@ let svg = d3.select("#graph1")
 
 let countRef = svg.append("g");
 
-// attr = 'title' : number of titles per genre on Netflix 
-// attr = 'runtime' : average runtime of movies by release year
-// attr = 'cast' : a flow chart where each actor is a node, and a link refers to a movie they both acted in
-function setData() {
+function setData1() {
   d3.csv('./data/netflix.csv').then(function (data) {
-    data = cleanData(data).slice(0, 10);
+    data = cleanData1(data).slice(0, 10);
       
     var maxCount = d3.max(data, (d, i) => d.count);
 
@@ -32,7 +29,7 @@ function setData() {
 
     let color = d3.scaleOrdinal()
       .domain(data.map(function(d) { return d.genre }))
-      .range(d3.quantize(d3.interpolateHcl("#66a0e2", "#81c2c3"), 10));
+      .range(d3.quantize(d3.interpolateHcl("#7842ff", "#c8b3ff"), 10));
 
     let bars = svg.selectAll("rect").data(data);
 
@@ -57,7 +54,7 @@ function setData() {
   });  
 }
 
-function cleanData(data) {
+function cleanData1(data) {
   genres = {};
   data.forEach(d => {
     gen = d.listed_in.split(",");
@@ -96,23 +93,4 @@ function convertToArray(data) {
   return genres.sort(compare);
 }
 
-function getRandomId(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
-
-function findCombinations(arr, nodes, combinations) {
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = i + 1; j < arr.length; j++) {
-      combinations.push({
-        source: arr[i].trim(),
-        output: arr[j].trim()
-      });
-    }
-    if (!nodes[arr[i].trim()]) {
-      nodes[arr[i].trim()] = getRandomId(100000);
-    }
-  }
-  return combinations;
-}
-
-setData();
+setData1();
