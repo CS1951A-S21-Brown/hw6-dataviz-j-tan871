@@ -26,13 +26,11 @@ const onHover = d => {
     .style('left', `${(d3.event.pageX) - 725}px`)
     .style('top', `${(d3.event.pageY) - 100}px`)
     .style('opacity', 0.9)
-}
 
-// const onLeave = () => {
-//   tooltip.transition()
-//     .duration(1000)
-//     .style('opacity', 0)
-// }
+  setTimeout(() => {
+    tooltip.style('opacity', 0)
+  }, 10000)
+}
 
 function getRandomId(max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -125,7 +123,6 @@ d3.csv('./data/netflix.csv').then(function (data) {
     .attr("r", 5)
     .style("fill", "#7842ff")
     .on('mouseenter', onHover)
-    // .on('mouseleave', onLeave)
   
     node.append("title")
     .text(d => d.id);
