@@ -15,7 +15,7 @@ let title = svg.append('text')
   .style('font-size', 20)
 
 let y_axis_text = svg.append("text")
-  .attr('transform', `translate(${0 - margin.left + margin.right - 70}, ${(graph_1_height - margin.top - margin.bottom) / 2})`)       // HINT: Place this at the center left edge of the graph
+  .attr('transform', `translate(${0 - margin.left + margin.right - 70}, ${(graph_1_height - margin.top - margin.bottom) / 2})`)       
   .style('text-anchor', 'middle')
   .text('Number of Titles')
 
@@ -40,8 +40,6 @@ function setData1(type) {
       .padding(0.1);
 
       y_axis_label.call(d3.axisLeft(y).tickSize(0).tickPadding(10));
-    // svg.append("g")
-    //   .call(d3.axisLeft(y).tickSize(0).tickPadding(10));
 
     let color = d3.scaleOrdinal()
       .domain(data.map(function(d) { return d.genre }))
@@ -67,10 +65,10 @@ function setData1(type) {
       .merge(counts)
       .transition()
       .duration(1000)
-      .attr("x", d => x(d.count) + 10)       // HINT: Add a small offset to the right edge of the bar, found by x(d.count)
-      .attr("y", d => y(d.genre) + 12)       // HINT: Add a small offset to the top edge of the bar, found by y(d.artist)
+      .attr("x", d => x(d.count) + 10)    
+      .attr("y", d => y(d.genre) + 12)       
       .style("text-anchor", "start")
-      .text(d => d.count);           // HINT: Get the name of the artist
+      .text(d => d.count);           
 
     title.text(type === 'top' ? 'Top 10 Movie and TV Show Genres on Netflix' : 'Bottom 10 Movie and TV Show Genres on Netflix')
       bars.exit().remove();

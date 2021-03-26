@@ -61,12 +61,10 @@ function cleanData3(data) {
   actorToMovieInt = {}
   actorToMovie = {}
 
-  // console.log(data);
-
   data.forEach(d => {
     if (parseInt(d.release_year) < 1970 && parseInt(d.release_year) > 1960) {
       listActors.push(d.cast.split(','));
-      actorToMovieInt[d.title] = d.cast.split(',');
+      actorToMovieInt[d.title + ` (${d.release_year})`] = d.cast.split(',');
     }
   });
 
@@ -108,14 +106,8 @@ d3.csv('./data/netflix.csv').then(function (data) {
       id: data.nodesReversed[key],
       name: key
     })
-    // data.nodes[data.nodesReversed[key]] = key;
   }
 
-
-  console.log(data.nodes);
-  console.log(data.links);
-
-  // Initialize the links
   var link = svg3
     .selectAll("line")
     .data(data.links)
@@ -123,7 +115,6 @@ d3.csv('./data/netflix.csv').then(function (data) {
     .append("line")
     .style("stroke", "#aaa")
 
-  // Initialize the nodes
   var node = svg3
     .selectAll("circle")
     .data(data.nodes)
@@ -163,5 +154,4 @@ d3.csv('./data/netflix.csv').then(function (data) {
       .attr('cx', d => d.x)
       .attr('cy', d => d.y)
   }
-
 });

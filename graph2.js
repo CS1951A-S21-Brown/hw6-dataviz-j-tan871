@@ -86,11 +86,9 @@ function setData2() {
       .append('text')
         .text(d => `${d.release_year} (${parseInt(d.duration)})`)
         .attr('transform', d => (x(d.release_year) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? 'rotate(180)' : 'rotate(0)')
-        .style('font-size', '11px')
+        .style('font-size', '12px')
         .attr('alignment-baseline', 'middle')
   })
 }
-
-//return (x(d.Country) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start"; }
 
 setData2();
