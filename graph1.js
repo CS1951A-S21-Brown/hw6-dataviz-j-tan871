@@ -1,19 +1,34 @@
-let svg = d3.select("#graph1")
-  .append("svg")
-  .attr("width", graph_1_width)
-  .attr("height", graph_1_height)
-  .append("g")
-  .attr("transform", `translate(${margin.left}, ${margin.top})`);
+let svg = d3.select('#graph1')
+  .append('svg')
+  .attr('width', graph_1_width)
+  .attr('height', graph_1_height)
+  .append('g')
+  .attr('transform', `translate(${margin.left + 40}, ${margin.top})`);
 
-let countRef = svg.append("g");
+let countRef = svg.append('g');
 
-function setData1() {
+let y_axis_label = svg.append('g');
+
+let title = svg.append('text')
+  .attr('transform',  `translate(${(graph_1_width - margin.left - margin.right) / 2}, ${-20})`)
+  .style('text-anchor', 'middle')
+  .style('font-size', 20)
+
+let y_axis_text = svg.append("text")
+  .attr('transform', `translate(${0 - margin.left + margin.right - 70}, ${(graph_1_height - margin.top - margin.bottom) / 2})`)       // HINT: Place this at the center left edge of the graph
+  .style('text-anchor', 'middle')
+  .text('Number of Titles')
+
+function setData1(type) {
   d3.csv('./data/netflix.csv').then(function (data) {
-    data = cleanData1(data).slice(0, 10);
-      
+    if (type === 'top') {
+      data = cleanData1(data).slice(0, 10);
+    } else {
+      data = cleanData1(data);
+      data = data.slice(data.length - 10, data.length);
+    }
+    
     var maxCount = d3.max(data, (d, i) => d.count);
-
-    console.log(maxCount);
     
     let x = d3.scaleLinear()
       .domain([0, maxCount])
@@ -24,8 +39,9 @@ function setData1() {
       .range([graph_1_height - margin.top - margin.bottom, 0])
       .padding(0.1);
 
-    svg.append("g")
-      .call(d3.axisLeft(y).tickSize(0).tickPadding(10));
+      y_axis_label.call(d3.axisLeft(y).tickSize(0).tickPadding(10));
+    // svg.append("g")
+    //   .call(d3.axisLeft(y).tickSize(0).tickPadding(10));
 
     let color = d3.scaleOrdinal()
       .domain(data.map(function(d) { return d.genre }))
@@ -36,21 +52,29 @@ function setData1() {
     bars.enter()
       .append("rect")
       .merge(bars)
+      .transition()
+      .duration(1000)
       .attr("fill", d => color(d.genre)) 
       .attr("x", x(0))
       .attr("y", d => y(d.genre))           
       .attr("width", d => x(d.count))
       .attr("height", y.bandwidth());    
       
-      let counts = countRef.selectAll("text").data(data);
+    let counts = countRef.selectAll("text").data(data);
 
-      counts.enter()
-        .append("text")
-        .merge(counts)
-        .attr("x", d => x(d.count) + 10)       // HINT: Add a small offset to the right edge of the bar, found by x(d.count)
-        .attr("y", d => y(d.genre) + 12)       // HINT: Add a small offset to the top edge of the bar, found by y(d.artist)
-        .style("text-anchor", "start")
-        .text(d => d.count);           // HINT: Get the name of the artist
+    counts.enter()
+      .append("text")
+      .merge(counts)
+      .transition()
+      .duration(1000)
+      .attr("x", d => x(d.count) + 10)       // HINT: Add a small offset to the right edge of the bar, found by x(d.count)
+      .attr("y", d => y(d.genre) + 12)       // HINT: Add a small offset to the top edge of the bar, found by y(d.artist)
+      .style("text-anchor", "start")
+      .text(d => d.count);           // HINT: Get the name of the artist
+
+    title.text(type === 'top' ? 'Top 10 Movie and TV Show Genres on Netflix' : 'Bottom 10 Movie and TV Show Genres on Netflix')
+      bars.exit().remove();
+      counts.exit().remove();
   });  
 }
 
@@ -93,4 +117,4 @@ function convertToArray(data) {
   return genres.sort(compare);
 }
 
-setData1();
+setData1('top');

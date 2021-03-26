@@ -9,4 +9,35 @@
     text-align: center;
 }
 
+.btns {
+    margin-left: 50px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    color: white;
+    background-color: #4600ff;
+    border: none;
+}
+
+.btns:hover {
+    color: black;
+    background-color: #c8b3ff;
+    border: none;
+    outline: none;
+}
+
+.btns:focus {
+    color: black;
+    background-color: #c8b3ff;
+    border: none;
+    outline: none;
+}
+
+.tooltip {
+    background-color: white;
+    padding: 10px;
+    font-size: 14px;
+    /* width: 75px; */
+    /* height: 30px; */
+}
+
 /* Include any custom CSS styling here! */

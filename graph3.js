@@ -1,10 +1,52 @@
-var svg3 = d3.select("#graph3")
-  .append("svg")
-  .attr("width", graph_3_width + margin.left + margin.right)
-  .attr("height", graph_3_height + margin.top + margin.bottom)
-  .append("g")
-  .attr("transform",
-    "translate(" + margin.left + "," + margin.top + ")");
+var svg3 = d3.select('#graph3')
+  .append('svg')
+  .attr('width', graph_3_width + margin.left + margin.right)
+  .attr('height', graph_3_height + margin.top + margin.bottom)
+  .append('g')
+  .attr('transform', `translate(${margin.left * 2}, ${margin.top})`);
+
+var title3 = svg3.append('text')
+  .attr('transform',  `translate(${(graph_3_width - margin.left - margin.right) / 2}, ${-20})`)
+  .style('text-anchor', 'middle')
+  .style('font-size', 20)
+  .text('Actor Collaborations in Netflix TV Shows and Movies from 1960-1970')
+
+var tooltipVisible = false
+
+var tooltip = d3.select('#graph3')
+  .append('div')
+  .attr('class', 'tooltip')
+  .style('opacity', 0)
+
+const onClick = d => {
+  let html = `<span>${d.name}</span>`
+  tooltip.html(html)
+    .transition()
+    .duration(100)
+    .style('left', `${(d3.event.pageX) - 725}px`)
+    .style('top', `${(d3.event.pageY) - 100}px`)
+    .style('opacity', 0.9)
+
+  setTimeout(() => (tooltip.transition()
+  .duration(500)
+  .style('opacity', 0)), 1000)
+}
+
+const mousemove = function(d) {
+  let html = `<span>hello</span>`
+  tooltip.html(html)
+    .transition()
+    .duration(100)
+    .style('left', `${(d3.event.pageX) - 720}px`)
+    .style('top', `${(d3.event.pageY) - 150}px`)
+    .style('opacity', 0.9)
+}
+
+function mouseout() {
+  tooltip.transition()
+    .duration(500)
+    .style('opacity', 0)
+}
 
 function getRandomId(max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -90,43 +132,38 @@ d3.csv('./data/netflix.csv').then(function (data) {
     .enter()
     .append("circle")
     .attr("r", 5)
-    .style("fill", "#69b3a2")
-
-  node.append("title")
+    .style("fill", "#7842ff")
+    .on('mouseover', onClick)
+  
+    node.append("title")
     .text(d => d.id);
 
-  // Let's list the force we wanna apply on the network
-  var simulation = d3.forceSimulation(data.nodes)                 // Force algorithm is applied to data.nodes
-    .force("link", d3.forceLink()                               // This force provides links between nodes
-      .id(function (d) { return d.id; })                     // This provide  the id of a node
-      .links(data.links)                                    // and this the list of links
-    )
-    .force("charge", d3.forceManyBody().strength(-10))         // This adds repulsion between nodes. Play with the -400 for the repulsion strength
-    .force("center", d3.forceCenter(graph_3_width / 2, graph_3_height / 2))     // This force attracts nodes to the center of the svg area
-    .on("end", ticked);
+  var simulation = d3.forceSimulation(data.nodes)
+    .force('link', d3.forceLink()
+      .id(d => d.id)
+      .distance('25')
+      .links(data.links))
+    .force('charge', d3.forceManyBody().strength(-50))
+    .force('collide', d3.forceCollide()
+      .radius(17))
+    .force('x', d3.forceX()
+      .strength(0.075)
+      .x((graph_3_width - margin.left - margin.right) / 2))
+    .force('y', d3.forceY()
+      .strength(0.075)
+      .y(graph_3_height / 2))
+    .on('tick', ticked);
 
-  simulation.on("tick", () => {
-    link
-      .attr("x1", d => d.source.x)
-      .attr("y1", d => d.source.y)
-      .attr("x2", d => d.target.x)
-      .attr("y2", d => d.target.y);
-
-    node
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y);
-  });
-  // This function is run at each iteration of the force algorithm, updating the nodes position.
   function ticked() {
     link
-      .attr("x1", function (d) { return d.source.x; })
-      .attr("y1", function (d) { return d.source.y; })
-      .attr("x2", function (d) { return d.target.x; })
-      .attr("y2", function (d) { return d.target.y; });
+      .attr('x1', d => d.source.x)
+      .attr('y1', d=> d.source.y)
+      .attr('x2', d => d.target.x)
+      .attr('y2', d => d.target.y)
 
-    node
-      .attr("cx", function (d) { return d.x; })
-      .attr("cy", function (d) { return d.y; });
+    node  
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y)
   }
 
 });

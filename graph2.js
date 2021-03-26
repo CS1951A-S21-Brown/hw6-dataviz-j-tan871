@@ -1,9 +1,15 @@
 let svg2 = d3.select('#graph2')
   .append('svg')
-  .attr("width", graph_2_width + 100)
+  .attr("width", graph_2_width)
   .attr("height", graph_2_height)
   .append("g")
   .attr("transform", `translate(${graph_2_width / 2}, ${graph_2_height / 2})`);
+
+let title2 = svg2.append('text')
+  .attr('transform',  `translate(${0}, ${(-graph_2_height / 2) + 15})`)
+  .style('text-anchor', 'middle')
+  .style('font-size', 20)
+  .text('Average Runtime of Movies on Netflix from 1942-2020')
 
 var innerRadius = 120;
 var outerRadius = Math.min(graph_2_width, graph_2_height) / 2;

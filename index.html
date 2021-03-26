@@ -13,12 +13,14 @@
         <h3>Assignment 6 &laquo; Data Visualization Dashboard &raquo;</h3>
     </div>
     <!--  We included a basic HTML structure for the 3 graphs here. Feel free to change this if you'd like  -->
-    <div class="row">
+    <div class="row justify-content-md-center">
         <div class="col-lg-4">
-            <!-- <h2 class="header">Graph 1</h2> -->
             <div id="graph1" class="ml-3"></div>
-            <!-- <h2 class="header">Graph 2</h2> -->
-            <div id="graph2"></div><br/>
+            <div class="mb-5">
+                <button type="button" class="btn btns btn-info ml-3" onclick="setData1('top')">Top 10 Genres</button>
+                <button type="button" class="btn btns btn-info ml-3" onclick="setData1('bottom')">Bottom 10 Genres</button>
+            </div>
+            <div id="graph2" class="mt-5"></div><br/>
         </div>
         <div class="col-lg-8">
             <div id="graph3"></div>
