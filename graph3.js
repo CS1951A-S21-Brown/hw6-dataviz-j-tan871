@@ -151,7 +151,7 @@ d3.csv('./data/netflix.csv').then(function (data) {
       .x((graph_3_width - margin.left - margin.right) / 2))
     .force('y', d3.forceY()
       .strength(0.075)
-      .y(graph_3_height / 2))
+      .y((graph_3_height - margin.top) / 2))
     .on('tick', ticked);
 
   function ticked() {

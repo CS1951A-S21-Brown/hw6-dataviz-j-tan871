@@ -10,12 +10,16 @@
 }
 
 .btns {
-    margin-left: 50px;
+    margin-left: 225px;
     margin-right: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     color: white;
     background-color: #4600ff;
     border: none;
+}
+
+.btns-right {
+    margin-left: 10px;
 }
 
 .btns:hover {
