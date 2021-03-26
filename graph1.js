@@ -17,6 +17,11 @@ let title = svg.append('text')
 let y_axis_text = svg.append("text")
   .attr('transform', `translate(${0 - margin.left + margin.right - 70}, ${(graph_1_height - margin.top - margin.bottom) / 2})`)       
   .style('text-anchor', 'middle')
+  .text('Genre')
+
+let x_axis_text = svg.append('text')
+  .attr('transform', `translate(${(graph_1_width - margin.left - margin.right) / 2}, ${graph_1_height - margin.top - 20})`)
+  .style('text-anchor', 'middle')
   .text('Number of Titles')
 
 function setData1(type) {

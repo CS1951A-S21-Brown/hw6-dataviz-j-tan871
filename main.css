@@ -10,7 +10,7 @@
 }
 
 .btns {
-    margin-left: 225px;
+    margin-left: 100px;
     margin-right: 10px;
     margin-bottom: 50px;
     color: white;
@@ -42,6 +42,14 @@
     font-size: 14px;
     /* width: 75px; */
     /* height: 30px; */
+}
+
+.answers {
+    margin: 20px;
+}
+
+p {
+    font-size: 14px;
 }
 
 /* Include any custom CSS styling here! */

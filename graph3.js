@@ -18,19 +18,21 @@ var tooltip = d3.select('#graph3')
   .attr('class', 'tooltip')
   .style('opacity', 0)
 
-const onClick = d => {
+const onHover = d => {
   let html = `<span>${d.name} | ${actorToMovie[d.name]}</span>`
   tooltip.html(html)
     .transition()
-    .duration(100)
+    .duration(500)
     .style('left', `${(d3.event.pageX) - 725}px`)
     .style('top', `${(d3.event.pageY) - 100}px`)
     .style('opacity', 0.9)
-
-  setTimeout(() => (tooltip.transition()
-  .duration(500)
-  .style('opacity', 0)), 1000)
 }
+
+// const onLeave = () => {
+//   tooltip.transition()
+//     .duration(1000)
+//     .style('opacity', 0)
+// }
 
 function getRandomId(max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -122,7 +124,8 @@ d3.csv('./data/netflix.csv').then(function (data) {
     .append("circle")
     .attr("r", 5)
     .style("fill", "#7842ff")
-    .on('mouseover', onClick)
+    .on('mouseenter', onHover)
+    // .on('mouseleave', onLeave)
   
     node.append("title")
     .text(d => d.id);

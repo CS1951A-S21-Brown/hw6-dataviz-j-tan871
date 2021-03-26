@@ -9,7 +9,7 @@ let title2 = svg2.append('text')
   .attr('transform',  `translate(${0}, ${(-graph_2_height / 2) + 15})`)
   .style('text-anchor', 'middle')
   .style('font-size', 20)
-  .text('Average Runtime of Movies on Netflix from 1942-2020')
+  .text('Average Runtime of Netflix Movies in Minutes by Release Year')
 
 var innerRadius = 120;
 var outerRadius = Math.min(graph_2_width, graph_2_height) / 2;

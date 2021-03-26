@@ -15,7 +15,7 @@
     <!--  We included a basic HTML structure for the 3 graphs here. Feel free to change this if you'd like  -->
     <div class="row justify-content-md-center">
         <div class="col-lg-4">
-            <div id="graph1" class="ml-3"></div>
+            <div id="graph1" class="ml-3" alt=""></div>
             <div class="mb-5">
                 <button type="button" class="btn btns btn-info ml-3" onclick="setData1('top')">Top 10 Genres</button>
                 <button type="button" class="btn btns btns-right btn-info ml-3" onclick="setData1('bottom')">Bottom 10 Genres</button>
@@ -24,7 +24,57 @@
         </div>
         <div class="col-lg-8">
             <div id="graph3"></div>
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <p>A collaboration is defined as actors appearing in the same movie. Hover to see the actor's name and the movie(s) they acted in!</p>
+            </div>
         </div>
+    </div>
+
+    <div class="row justify-content-md-center">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <p>
+                Describe how your dashboard answers the questions presented. You don't have to address every question directly, but should at a high level address the main questions. (10 points) <br>
+                1. The bar plot addresses the first question because it displays the number of titles for the top ten movie genres and the bottom ten movie genres. I decided to only show the top 
+                ten and bottom ten because I felt that showing all of them at once would make the graph too cluttered.<br>
+                2. The circular bar plot addresses the second question because it shows the average runtime for movies by release year. I chose to use a circular bar plot because it shows how the runtime
+                changes throughout the years. Additionally, it is easier to view compared to a bar plot with all the release years. <br>
+                3. The network graph addresses the third question because it shows a flow chart where each actor is a node, and the link is the movie that they both acted in. I chose to only display the 
+                movies and TV shows from 1960-1970 because increasing the release year range makes the chart too cluttered and hard to read. I also added a tooltip where the user can see the actor name and
+                the movie(s) an actor acted in when they hover over the actor node. 
+            </p>
+            <p>
+                List 3 reasons why D3 was helpful and improved your visualization (6 points) <br>
+                1. D3 was helpful because I could be very specific in how I wanted my graphs to look. This was especially helpful for the network graph, because I could choose
+                the strength of the forces between the nodes. <br>
+                2. D3 improved my visualization because it allowed me to make interactive graphs. Allowing the user to toggle between two graphs and hover over data points to see tooltips
+                makes the data a lot easier to understand. <br>
+                3. Another way D3 improved my visualization was that I was able to display the visualizations on a web page. Although matplotlib is very easy to use, it does not directly
+                add the graph to the browser. 
+            </p>
+            <p>
+                List 3 reasons why D3 would not be the best tool for creating a visualization (6 points) <br>
+                1. D3 would not be the best tool for creating a visualization if the visualization was meant to be printed out or saved as a picture. D3 is better for
+                interactive visualizations; if I needed a static visualization it would be a lot easier to use matplotlib to make a graph, since it generates graphs in a more predetermined way. <br>
+                2. D3 has a pretty steep learning curve compared to other libraries like Chart.js, so if someone without a lot of technical knowledge or time wanted to create a visualization, D3 may not be the best option for them. <br>
+                3. D3 would not be a good tool if I wanted my raw data to be inaccessible to the general public. Someone could easily use inspect element on the graph, and 
+                be able to find the exact data points. 
+            </p>
+            <p>
+                Evaluate the accessibility of your dashboard based on the readings in the “Before you begin” section. What kinds of users might find this dashboard accessible and who might have more difficulty? What additional actions might you take to make this dashboard more accessible to all audiences? Your response should refer to at least one of the readings and be about 1 paragraph. <br>
+                According to the second article, users with screen readers may find my graph difficult, since the graphs don't have a summary of the graph results underneath. Additionally, users who use assistive technology may be unable to use the tooltips
+                in the network graph, since they would not be able to hover over the nodes. In order to make my visualizations more successful, I would add a summary underneath each graph, add alt text to each of the svgs, and find a way to label each of the 
+                nodes of the network graph directly without tooltips. I would also add an option to increase the size of the graphs, since the text may be too small for those who are visually impaired. 
+            </p>
+            <p>
+                Reflect on the stages of your design and implementation process when you could have taken steps to make your dashboard more accessible to all audiences. What are some factors that kept you from taking these steps?  <br>
+                I did my best to make it accessible by choosing a light shade of purple and a dark shade of purple to add contrast to the bars, and making the button text dark when selected to contrast against the light purple. and increase the font size of the labels. However, I think that my dashboard
+                could be even more improved by adding an option to make the graphs bigger, and adding an option that further increases the contrast of the colors and change the font to one that is even more readable. Additionally, 
+                I wish that I was able to make the network graph different colors to bring more contrast between groups. What kept me from taking these steps were the time constraints of this assignment, my lack of experience in 
+                the frontend, and my lack of experience in D3.js.
+            </p>
+        </div>
+        <div class="col-lg-2"></div>
     </div>
     <!--Feel free to add more JavaScript files as needed-->
     <script type="text/javascript" src="main.js"></script>
