@@ -19,7 +19,7 @@ var tooltip = d3.select('#graph3')
   .style('opacity', 0)
 
 const onClick = d => {
-  let html = `<span>${d.name}</span>`
+  let html = `<span>${d.name} | ${actorToMovie[d.name]}</span>`
   tooltip.html(html)
     .transition()
     .duration(100)
@@ -30,22 +30,6 @@ const onClick = d => {
   setTimeout(() => (tooltip.transition()
   .duration(500)
   .style('opacity', 0)), 1000)
-}
-
-const mousemove = function(d) {
-  let html = `<span>hello</span>`
-  tooltip.html(html)
-    .transition()
-    .duration(100)
-    .style('left', `${(d3.event.pageX) - 720}px`)
-    .style('top', `${(d3.event.pageY) - 150}px`)
-    .style('opacity', 0.9)
-}
-
-function mouseout() {
-  tooltip.transition()
-    .duration(500)
-    .style('opacity', 0)
 }
 
 function getRandomId(max) {
@@ -74,14 +58,27 @@ function cleanData3(data) {
   nodes = []
   nodesSwitched = []
   links = []
+  actorToMovieInt = {}
+  actorToMovie = {}
 
   // console.log(data);
 
   data.forEach(d => {
     if (parseInt(d.release_year) < 1970 && parseInt(d.release_year) > 1960) {
       listActors.push(d.cast.split(','));
+      actorToMovieInt[d.title] = d.cast.split(',');
     }
   });
+
+  for (var key in actorToMovieInt) {
+    actorToMovieInt[key].map(arr => {
+      if (!actorToMovie[arr.trim()]) {
+        actorToMovie[arr.trim()] = key
+      } else {
+        actorToMovie[arr.trim()] += ' & ' + key;
+      }
+    })
+  }
 
   listActors.map(d => {
     links = findCombinations(d, nodes, links, nodesSwitched);
@@ -96,7 +93,8 @@ function cleanData3(data) {
 
   return {
     links,
-    nodesReversed: nodes
+    nodesReversed: nodes,
+    actorToMovie
   };
 }
 

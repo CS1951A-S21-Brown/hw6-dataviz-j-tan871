@@ -80,6 +80,7 @@ function setData1(type) {
 
 function cleanData1(data) {
   genres = {};
+
   data.forEach(d => {
     gen = d.listed_in.split(",");
     for (let i = 0; i < gen.length; i++) {
